@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Car
+    internal class Car  // добавить интерфейс
     {
-        private string? brand;
-        public string? Brand { get { return brand; } set { brand = value; } }
+        private  string? brand;
+        public  string? Brand { get { return brand; } set { brand = value; } }
         private string? model;
         public string? Model { get { return model; } set { model = value; } }
         private string? number;
@@ -42,7 +42,7 @@ namespace ConsoleApp1
             this.Availability = availability;
             this.Price = price;
         }
-        public void Сharacteristics()
+        public string Сharacteristics()
         {
             Console.WriteLine("Характеристики автомобиля: ");
             Console.WriteLine($"Марка автомобиля: {brand}");
@@ -56,6 +56,7 @@ namespace ConsoleApp1
             if (availability == true) Console.WriteLine($"Доступность автомобиля: свободен ");
             else Console.WriteLine($"Доступность автомобиля: занят ");
             Console.WriteLine($"Цена за сутки проката автомобиля: {price}");
+            return "";
         }
 
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Administrator : Person
+    internal class Administrator : Person // посмотреть внимательно на методы
     {
         public Administrator(string? fullName, string? gender, ushort age) : base(fullName, gender, age)
         {

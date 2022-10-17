@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Person
+    internal class Person  // сделать класс абстрактным и удалить конструктор
     {
         private string? fullName;
         public string? FullName { get { return fullName; } set { fullName = value; } }
@@ -14,7 +14,7 @@ namespace ConsoleApp1
         public string? Gender { get { return gender; } set { gender = value; } }
         private ushort age;
         public ushort Age { get { return age; } set { age = value; } }
-        public Person(string? fullName, string? gender, ushort age)
+        public Person(string? fullName, string? gender, ushort age) 
         {
             this.FullName = fullName;
             this.Gender = gender;

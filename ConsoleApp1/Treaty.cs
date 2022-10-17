@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Treaty
+    internal class Treaty // добавить поля и свойства, доделать структуру этого класса 
     {
 
         public bool Check(Customer ct)

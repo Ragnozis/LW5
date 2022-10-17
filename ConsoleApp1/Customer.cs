@@ -27,7 +27,7 @@ namespace ConsoleApp1
             this.Cash = cash;
         }
 
-        public void Return(Car c, Administrator a)
+        public void Return(Car c, Administrator a) // сделать что-нибудь с странной функцией RentalDuration2
         {
 
             moneyOnCreditCard = moneyOnCreditCard - (c.Price * a.RentalDuration2());
