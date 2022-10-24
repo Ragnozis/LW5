@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Car  // добавить интерфейс
+    internal class Car  
     {
         private  string? brand;
         public  string? Brand { get { return brand; } set { brand = value; } }

@@ -16,7 +16,7 @@ namespace ConsoleApp1
         public double DrivingeExperience { get { return drivingExperience; } set { drivingExperience = value; } }
         private uint cash;
         public uint Cash { get { return cash; } set { cash = value; } }
-        public Customer(string? fullName, string? gender, ushort age, string? numberCreditCard, int moneyOnCreditCard, double drivingExperience, uint cash) : base(fullName, gender, age)
+        public Customer(string? fullName, string? gender, ushort age, string? numberCreditCard, int moneyOnCreditCard, double drivingExperience, uint cash) 
         {
             this.FullName = fullName;
             this.Gender = gender;
