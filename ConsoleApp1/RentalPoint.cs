@@ -18,8 +18,7 @@ namespace ConsoleApp1
           {
               this.Address = address;
             this.C = C;
-              A = new List<Administrator>();
-
+            this.A = A;
           }
         public void AddCar(Car item)
          {

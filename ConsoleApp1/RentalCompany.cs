@@ -6,20 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsoleApp1
-{
-    class RentalCompany //:  ISerializable // реализовать интерфейс ISerializable + 
+{ [Serializable]
+    class RentalCompany //:  ISerializable 
     {
         public delegate void d1(string c);
         private static void Message(string c)
         {
             Console.WriteLine(c);
         }
-        
 
         static void Main(string[] args)
         {
             Random rnd;
-            int value;
             Customer ct1 = new Customer("Смирнова Марина Викторовна", "женщина", 25, "4111111111100031", 5000, 5, 500);
             Customer ct2 = new Customer("Белов Андрей Федорович", "мужчина", 32, "4111151111100031", 10000, 2, 100);
             Customer ct3 = new Customer("Белая Анастасия Николаевна", "женщина", 20, "4117211111100031", 2000, 0.3, 300);
@@ -46,72 +44,47 @@ namespace ConsoleApp1
             RentalPoint r4 = new RentalPoint("Озерское ш. 14", new List<Car>() { c1, c6, c4, c8 }, new List<Administrator>() { a6, a8 });
             List<RentalPoint> RP = new List<RentalPoint>() { r1,r2,r3,r4};
             List<Customer> customers = new List<Customer>() { ct1, ct2, ct3, ct4 };
-
-            // Treaty t = new Treaty();
-            // Customer ct = new Customer("", "", 0, "", 0, 0, 0);
-            //RentalPoint r = new RentalPoint("", new List<Car>(), new List<Administrator>());
-            //Administrator a = new Administrator("", "", 0);
-            //Car c = new Car("", "", "", 0, 0, 0, 0, 0, true, 0);
-
             rnd = new Random();
-
             var selected_customer =customers[rnd.Next(customers.Count)];
             rnd = new Random();
             var selected_RentalPoint = RP[rnd.Next(RP.Count)];
             rnd = new Random();
-            var selected_car = r1.C[rnd.Next(r1.C.Count)];
-            //   Console.WriteLine($"{ct.FullName} направляется в прокат на {r.Address}");
-            string cd = $"{selected_customer.FullName} направляется в прокат на {selected_RentalPoint.Address}";
+            var selected_car = selected_RentalPoint.C[rnd.Next(selected_RentalPoint.C.Count)];
+            rnd = new Random();
+            var selected_administrator = selected_RentalPoint.A[rnd.Next(selected_RentalPoint.A.Count)];
             d1 Work = new(Message);
+            string cd = $"{selected_customer.FullName} направляется в прокат на {selected_RentalPoint.Address}";
+            Work(cd);
+            cd = $"{selected_customer.FullName} хочет взять на прокат {selected_car.Brand}";
             Work(cd);
             rnd = new Random();
-          value = rnd.Next(1, 2);
-        /*  if (value1 == 1 && value == 1) a = a1;
-          if (value1 == 1 && value == 2) a = a2;
-          if (value1 == 2 && value == 1) a = a3;
-          if (value1 == 2 && value == 2) a = a4;
-          if (value1 == 3 && value == 1) a = a5;
-          if (value1 == 3 && value == 2) a = a6;
-          if (value1 == 4 && value == 1) a = a7;
-          if (value1 == 4 && value == 2) a = a8;
-          rnd = new Random();
-          value = rnd.Next(1, 4);
-          if (value1 == 1 && value == 1) c = c1;
-          if (value1 == 1 && value == 2) c = c2;
-          if (value1 == 1 && value == 3) c = c3;
-          if (value1 == 1 && value == 4) c = c4;
-          if (value1 == 2 && value == 1) c = c4;
-          if (value1 == 2 && value == 2) c = c7;
-          if (value1 == 2 && value == 3) c = c2;
-          if (value1 == 2 && value == 4) c = c5;
-          if (value1 == 3 && value == 1) c = c6;
-          if (value1 == 3 && value == 2) c = c2;
-          if (value1 == 3 && value == 3) c = c8;
-          if (value1 == 3 && value == 4) c = c4;
-          if (value1 == 4 && value == 1) c = c4;
-          if (value1 == 4 && value == 2) c = c7;
-          if (value1 == 4 && value == 3) c = c8;
-          if (value1 == 4 && value == 4) c = c1;
-     //     Console.WriteLine($"{ct.FullName} планирует взять в прокат автомобиль {c.Brand} {c.Model} ");
-          c.Сharacteristics();
-          if (c.Availability == false) Console.WriteLine("Данная машина в данный момент недоступна");
-          if (c.Availability == true)
+            int RD = rnd.Next(1, 30);
+            Treaty t = new Treaty(selected_administrator, selected_customer, selected_car, selected_RentalPoint,RD) ;
+          selected_car.Сharacteristics();
+            if (selected_car.Availability == false) 
+            {
+                do { cd = $"Данная машина в данный момент недоступна";
+                    Work(cd);
+                    rnd = new Random();
+                    selected_car = selected_RentalPoint.C[rnd.Next(selected_RentalPoint.C.Count)];
+                }
+                while (selected_car.Availability == false); 
+            }
+          else 
           {
-              if (t.Check(ct) == true)
-              {
-                  t.Create(ct, r, a, c);
-                  rnd = new Random();
-                  value = rnd.Next(1, 4);
-                  if (value == 1) r = r4;
-                  if (value == 2) r = r3;
-                  if (value == 3) r = r2;
-                  if (value == 4) r = r1;
-                  Console.WriteLine($"{ct.FullName} возвращает автомобиль в прокат на {r.Address}");
-                  t.Return(ct, c, a);
-              }
-              else Console.WriteLine("Вы не можете взять машину в прокат, так как ваш водительский опыт меньше одного года");
+                if (selected_customer.DrivingeExperience>1)
+                {
+                    cd = $"{selected_administrator.FullName} будет обслуживать клиента {selected_customer.FullName}";
+                    Work(cd);
+                    t.CompleteRentalProcess();
+                    rnd = new Random();
+                    selected_RentalPoint = RP[rnd.Next(RP.Count)];
+                    cd = $"{selected_customer.FullName} возвращает автомобиль в прокат на {selected_RentalPoint.Address}";
+                    Work(cd);
+                }
+                else { cd = "Вы не можете взять машину в прокат, так как ваш водительский опыт меньше одного года"; Work(cd); } 
           }
-          */
+          
 
         }
     }

@@ -14,9 +14,9 @@ namespace ConsoleApp1
         public int MoneyOnCreditCard { get { return moneyOnCreditCard; } set { moneyOnCreditCard = value; } }
         private double drivingExperience;
         public double DrivingeExperience { get { return drivingExperience; } set { drivingExperience = value; } }
-        private uint cash;
-        public uint Cash { get { return cash; } set { cash = value; } }
-        public Customer(string? fullName, string? gender, ushort age, string? numberCreditCard, int moneyOnCreditCard, double drivingExperience, uint cash) 
+        private int cash;
+        public int Cash { get { return cash; } set { cash = value; } }
+        public Customer(string? fullName, string? gender, ushort age, string? numberCreditCard, int moneyOnCreditCard, double drivingExperience, int cash) 
         {
             this.FullName = fullName;
             this.Gender = gender;
@@ -27,14 +27,6 @@ namespace ConsoleApp1
             this.Cash = cash;
         }
 
-        public void Return(Car c, Administrator a) // сделать что-нибудь с странной функцией RentalDuration2
-        {
-
-            moneyOnCreditCard = moneyOnCreditCard - (c.Price * a.RentalDuration2());
-            int f = c.Price * a.RentalDuration2();
-            Console.WriteLine($"С вашей карты снято {f}");
-            Console.WriteLine($"На вашем счету осталось {moneyOnCreditCard}");
-            c.Availability = true;
-        }
+      
     }
 }
