@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using System.Threading.Tasks;
 
 namespace ConsoleApp1
-{
-    internal class Car  
+{ 
+    internal class Car 
     {
         private  string? brand;
         public  string? Brand { get { return brand; } set { brand = value; } }
@@ -42,6 +43,7 @@ namespace ConsoleApp1
             this.Availability = availability;
             this.Price = price;
         }
+        
         public string Сharacteristics()
         {
             Console.WriteLine("Характеристики автомобиля: ");

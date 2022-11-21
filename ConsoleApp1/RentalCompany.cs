@@ -2,17 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsoleApp1
-{ [Serializable]
-    class RentalCompany //:  ISerializable 
+{
+    class RentalCompany
     {
         public delegate void d1(string c);
         private static void Message(string c)
         {
             Console.WriteLine(c);
+        }
+        public static void SerializeItem(string fileName, IFormatter formatter)
+        {
+            // Create an instance of the type and serialize it.
+            Customer t = new Customer("Смирнова Марина Викторовна", "женщина", 25, "4111111111100031", 5000, 5, 500);
+
+            FileStream s = new FileStream(fileName, FileMode.Create);
+            formatter.Serialize(s, t);
+            s.Close();
+        }
+
+        public static void DeserializeItem(string fileName, IFormatter formatter)
+        {
+            FileStream s = new FileStream(fileName, FileMode.Open);
+            Customer t = (Customer)formatter.Deserialize(s);
+            Console.WriteLine(t.FullName);
         }
 
         static void Main(string[] args)
@@ -42,51 +59,49 @@ namespace ConsoleApp1
             RentalPoint r2 = new RentalPoint("ул. Будённого 37", new List<Car>() { c2, c4, c7, c8 }, new List<Administrator>() { a2, a5 });
             RentalPoint r3 = new RentalPoint("ул. Гаспадарчая 29/1", new List<Car>() { c8, c3, c5, c2 }, new List<Administrator>() { a4, a7 });
             RentalPoint r4 = new RentalPoint("Озерское ш. 14", new List<Car>() { c1, c6, c4, c8 }, new List<Administrator>() { a6, a8 });
-            List<RentalPoint> RP = new List<RentalPoint>() { r1,r2,r3,r4};
+            List<RentalPoint> RP = new List<RentalPoint>() { r1, r2, r3, r4 };
             List<Customer> customers = new List<Customer>() { ct1, ct2, ct3, ct4 };
+            Car[] arrray1 = new Car[r1.C.Count];
+            Car[] arrray2 = new Car[r2.C.Count];
+            Car[] arrray3 = new Car[r3.C.Count];
+            Car[] arrray4 = new Car[r4.C.Count];
+            r1.SelectedCar(arrray1);
+            r2.SelectedCar(arrray2);
+            r3.SelectedCar(arrray3);
+            r4.SelectedCar(arrray4);
+           /* string fileName = "dataStuff.myData";
+            IFormatter formatter = new BinaryFormatter();
+            RentalCompany.SerializeItem(fileName, formatter); // Serialize an instance of the class.
+            RentalCompany.DeserializeItem(fileName, formatter); // Deserialize the instance.
+            Console.WriteLine("Done");
+            Console.ReadLine();
+           */
             rnd = new Random();
-            var selected_customer =customers[rnd.Next(customers.Count)];
-            rnd = new Random();
+            var selected_customer = customers[rnd.Next(customers.Count)];
             var selected_RentalPoint = RP[rnd.Next(RP.Count)];
-            rnd = new Random();
             var selected_car = selected_RentalPoint.C[rnd.Next(selected_RentalPoint.C.Count)];
-            rnd = new Random();
             var selected_administrator = selected_RentalPoint.A[rnd.Next(selected_RentalPoint.A.Count)];
             d1 Work = new(Message);
             string cd = $"{selected_customer.FullName} направляется в прокат на {selected_RentalPoint.Address}";
             Work(cd);
             cd = $"{selected_customer.FullName} хочет взять на прокат {selected_car.Brand}";
             Work(cd);
-            rnd = new Random();
-            int RD = rnd.Next(1, 30);
-            Treaty t = new Treaty(selected_administrator, selected_customer, selected_car, selected_RentalPoint,RD) ;
-          selected_car.Сharacteristics();
-            if (selected_car.Availability == false) 
+            if (selected_customer.Limitation() == true)
             {
-                do { cd = $"Данная машина в данный момент недоступна";
-                    Work(cd);
-                    rnd = new Random();
-                    selected_car = selected_RentalPoint.C[rnd.Next(selected_RentalPoint.C.Count)];
-                }
-                while (selected_car.Availability == false); 
+                int RD = rnd.Next(1, 30);
+                Treaty t = new Treaty(selected_administrator, selected_customer, selected_car, selected_RentalPoint, RD);
+                selected_car.Сharacteristics();
+                cd = $"{selected_administrator.FullName} будет обслуживать клиента {selected_customer.FullName}";
+                Work(cd);
+                t.CompleteRentalProcess();
+                selected_RentalPoint = RP[rnd.Next(RP.Count)];
+                cd = $"{selected_customer.FullName} возвращает автомобиль в прокат на {selected_RentalPoint.Address}";
+                Work(cd);
             }
-          else 
-          {
-                if (selected_customer.DrivingeExperience>1)
-                {
-                    cd = $"{selected_administrator.FullName} будет обслуживать клиента {selected_customer.FullName}";
-                    Work(cd);
-                    t.CompleteRentalProcess();
-                    rnd = new Random();
-                    selected_RentalPoint = RP[rnd.Next(RP.Count)];
-                    cd = $"{selected_customer.FullName} возвращает автомобиль в прокат на {selected_RentalPoint.Address}";
-                    Work(cd);
-                }
-                else { cd = "Вы не можете взять машину в прокат, так как ваш водительский опыт меньше одного года"; Work(cd); } 
-          }
-          
+            else { cd = "Вы не можете взять машину в прокат, так как ваш водительский опыт меньше одного года"; Work(cd); }
 
         }
     }
 }
 
+    

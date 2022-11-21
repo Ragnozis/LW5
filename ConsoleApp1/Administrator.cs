@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Administrator : Person // посмотреть внимательно на методы
+    [Serializable]
+    internal class Administrator : Person 
     {
         public Administrator(string? fullName, string? gender, ushort age) 
         {
