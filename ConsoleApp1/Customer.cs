@@ -18,7 +18,7 @@ namespace ConsoleApp1
         public double DrivingExperience { get { return drivingExperience; } set { drivingExperience = value; } }
         private int cash;
         public int Cash { get { return cash; } set { cash = value; } }
-        public Customer(string? fullName, string? gender, ushort age, string? numberCreditCard, int moneyOnCreditCard, double drivingExperience, int cash) 
+        public Customer(string? fullName, string? gender, int age, string? numberCreditCard, int moneyOnCreditCard, double drivingExperience, int cash) 
         {
             this.FullName = fullName;
             this.Gender = gender;
@@ -30,16 +30,24 @@ namespace ConsoleApp1
         }
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            // Use the AddValue method to specify serialized values.
-            info.AddValue("props", FullName, typeof(string));
-            
-            
+            info.AddValue("FN", FullName, typeof(string));
+            info.AddValue("GR", Gender, typeof(string));
+            info.AddValue("AGE", Age, typeof(int));
+            info.AddValue("NCC", NumberCreditCard, typeof(string));
+            info.AddValue("MOCC", MoneyOnCreditCard, typeof(int));
+            info.AddValue("DE", DrivingExperience, typeof(double));
+            info.AddValue("C", Cash, typeof(int));
 
         }
         public Customer(SerializationInfo info, StreamingContext context)
         {
-            // Reset the property value using the GetValue method.
-            FullName = (string)info.GetValue("props", typeof(string));
+            FullName = (string)info.GetValue("FN", typeof(string));
+            Gender = (string)info.GetValue("GR", typeof(string));
+            Age = (int)info.GetValue("AGE", typeof(int));
+            NumberCreditCard = (string)info.GetValue("NCC", typeof(string));
+            MoneyOnCreditCard = (int)info.GetValue("MOCC", typeof(int));
+            DrivingExperience = (double)info.GetValue("DE", typeof(double));
+            Cash = (int)info.GetValue("C", typeof(int));
 
         }
         public bool Limitation()

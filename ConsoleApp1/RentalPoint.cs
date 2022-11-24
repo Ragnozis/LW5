@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    [Serializable]
+    
     internal class RentalPoint  
     {
         private string? address;
@@ -29,17 +29,18 @@ namespace ConsoleApp1
         {
             A.Add(item);
         }
-        public void SelectedCar(Car[] array)
+        public List<Car> SelectCar()
         {
-            
-            for (int i=0;i<C.Count;i++)
+            List<Car> array = new List<Car>();
+            foreach (Car ca in C)
             {
 
-                if (C[i].Availability == true) array[i] = C[i]; 
+                if (ca.Availability == true) array.Add(ca); 
 
 
 
                 }
+            return array;   
 
         }
        

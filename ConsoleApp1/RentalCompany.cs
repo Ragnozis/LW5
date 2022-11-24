@@ -17,19 +17,34 @@ namespace ConsoleApp1
         }
         public static void SerializeItem(string fileName, IFormatter formatter)
         {
-            // Create an instance of the type and serialize it.
-            Customer t = new Customer("Смирнова Марина Викторовна", "женщина", 25, "4111111111100031", 5000, 5, 500);
-
+            Customer ct1 = new Customer("Смирнова Марина Викторовна", "женщина", 25, "4111111111100031", 5000, 5, 500);
+            Customer ct2 = new Customer("Белов Андрей Федорович", "мужчина", 32, "4111151111100031", 10000, 2, 100);
+            Customer ct3 = new Customer("Белая Анастасия Николаевна", "женщина", 20, "4117211111100031", 2000, 0.3, 300);
+            Customer ct4 = new Customer("Соболев Алексей Константинович", "мужчина", 40, "4111111143100031", 5000, 12, 1000);
             FileStream s = new FileStream(fileName, FileMode.Create);
-            formatter.Serialize(s, t);
+            formatter.Serialize(s, ct1); // посмотреть using streams c# streamwriter
+            s.Close();
+            formatter.Serialize(s, ct2);
+            s.Close();
+            formatter.Serialize(s, ct3);
+            s.Close();
+            formatter.Serialize(s, ct4);
             s.Close();
         }
 
         public static void DeserializeItem(string fileName, IFormatter formatter)
         {
             FileStream s = new FileStream(fileName, FileMode.Open);
-            Customer t = (Customer)formatter.Deserialize(s);
-            Console.WriteLine(t.FullName);
+            Customer ct1 = (Customer)formatter.Deserialize(s);
+            Customer ct2 = (Customer)formatter.Deserialize(s);
+            Customer ct3 = (Customer)formatter.Deserialize(s);
+            Customer ct4 = (Customer)formatter.Deserialize(s);
+
+            Console.WriteLine(ct1.FullName, ct1.Gender, ct1.Age, ct1.NumberCreditCard, ct1.MoneyOnCreditCard, ct1.DrivingExperience, ct1.Cash);
+            Console.WriteLine(ct2.FullName, ct2.Gender, ct2.Age, ct2.NumberCreditCard, ct2.MoneyOnCreditCard, ct2.DrivingExperience, ct2.Cash);
+            Console.WriteLine(ct3.FullName, ct3.Gender, ct3.Age, ct3.NumberCreditCard, ct3.MoneyOnCreditCard, ct3.DrivingExperience, ct3.Cash);
+            Console.WriteLine(ct4.FullName, ct4.Gender, ct4.Age, ct4.NumberCreditCard, ct4.MoneyOnCreditCard, ct4.DrivingExperience, ct4.Cash);
+
         }
 
         static void Main(string[] args)
@@ -61,25 +76,19 @@ namespace ConsoleApp1
             RentalPoint r4 = new RentalPoint("Озерское ш. 14", new List<Car>() { c1, c6, c4, c8 }, new List<Administrator>() { a6, a8 });
             List<RentalPoint> RP = new List<RentalPoint>() { r1, r2, r3, r4 };
             List<Customer> customers = new List<Customer>() { ct1, ct2, ct3, ct4 };
-            Car[] arrray1 = new Car[r1.C.Count];
-            Car[] arrray2 = new Car[r2.C.Count];
-            Car[] arrray3 = new Car[r3.C.Count];
-            Car[] arrray4 = new Car[r4.C.Count];
-            r1.SelectedCar(arrray1);
-            r2.SelectedCar(arrray2);
-            r3.SelectedCar(arrray3);
-            r4.SelectedCar(arrray4);
-           /* string fileName = "dataStuff.myData";
+           
+            string fileName = "dataStuff.myData";
             IFormatter formatter = new BinaryFormatter();
-            RentalCompany.SerializeItem(fileName, formatter); // Serialize an instance of the class.
-            RentalCompany.DeserializeItem(fileName, formatter); // Deserialize the instance.
+            RentalCompany.SerializeItem(fileName, formatter); 
+            RentalCompany.DeserializeItem(fileName, formatter); 
             Console.WriteLine("Done");
             Console.ReadLine();
-           */
+           
             rnd = new Random();
             var selected_customer = customers[rnd.Next(customers.Count)];
             var selected_RentalPoint = RP[rnd.Next(RP.Count)];
-            var selected_car = selected_RentalPoint.C[rnd.Next(selected_RentalPoint.C.Count)];
+            var tmp_cars = selected_RentalPoint.SelectCar();
+            var selected_car = tmp_cars[rnd.Next(tmp_cars.Count)];
             var selected_administrator = selected_RentalPoint.A[rnd.Next(selected_RentalPoint.A.Count)];
             d1 Work = new(Message);
             string cd = $"{selected_customer.FullName} направляется в прокат на {selected_RentalPoint.Address}";

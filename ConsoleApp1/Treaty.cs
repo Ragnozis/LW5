@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    [Serializable]
     internal class Treaty
     {
         public delegate void d1(string c);

@@ -12,8 +12,8 @@ namespace ConsoleApp1
         public string? FullName { get { return fullName; } set { fullName = value; } }
         private string? gender;
         public string? Gender { get { return gender; } set { gender = value; } }
-        private ushort age;
-        public ushort Age { get { return age; } set { age = value; } }
+        private int age;
+        public int Age { get { return age; } set { age = value; } }
        
     }
 }
